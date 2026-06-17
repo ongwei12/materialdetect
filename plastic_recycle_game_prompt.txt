@@ -1,0 +1,53 @@
+Create an engaging animated educational game about plastic recycling with the following specifications:
+
+**Game Title:** Plastic Recycle Adventure: Save Our Oceans!
+
+**Game Concept:**
+An interactive story-driven game where players follow the journey of a plastic bottle through its lifecycle, making choices that affect the environment and earning points for sustainable decisions.
+
+**Story Structure:**
+1. **Introduction Scene:** Animated opening showing a factory producing plastic bottles, with cheerful music and explanatory text about how plastics are made from oil.
+
+2. **Consumer Phase:** Player controls a character (like Xiao Ming) who buys and uses the bottle. Interactive choices: Drink water, then decide what to do with the empty bottle (recycle bin, trash, or litter).
+
+3. **Collection Phase:** Depending on choice, show different paths:
+   - Recycling: Truck picks up bottle, goes to recycling center
+   - Trash: Goes to landfill or incinerator
+   - Litter: Blows in wind, enters river
+
+4. **Environmental Impact Phase:** 
+   - If recycled: Show transformation into new products (T-shirt, park bench, etc.)
+   - If not: Dramatic animation of ocean pollution, microplastics, marine life affected
+
+5. **Ending:** Score screen showing environmental impact, with tips for real-life recycling.
+
+**Animation Requirements:**
+- Smooth 2D animations with fluid movements
+- Colorful, appealing graphics suitable for children and families
+- Environmental themes: Clean ocean blues, polluted grays, recycling greens
+- Character animations: Happy/sad expressions based on choices
+- Particle effects: Bubbles in ocean, smoke from incinerator, sparkles for recycling success
+
+**Game Mechanics:**
+- Point system: +10 for recycling, -5 for polluting
+- Mini-games: Sorting game (drag bottles to correct bins), Memory game (match recyclable items)
+- Multiple endings based on choices
+- Educational facts pop-ups throughout the game
+
+**Audio:**
+- Upbeat background music that changes based on environmental state
+- Sound effects: Factory noises, ocean waves, recycling machine sounds
+- Voice-over narration explaining each phase
+
+**Target Audience:** Children 8-12 years old, educational but fun
+
+**Platform:** Web-based HTML5 game, playable in browsers
+
+**Technical Requirements:**
+- Use HTML5 Canvas or WebGL for animations
+- Responsive design for mobile and desktop
+- Include interactive buttons, drag-and-drop mechanics
+- Progress saving with localStorage
+
+Make the game visually stunning with smooth animations, engaging story, and clear educational messages about the importance of plastic recycling.</content>
+<parameter name="filePath">c:\Users\ONG\Downloads\GAME\plastic_recycle_game_prompt.txt

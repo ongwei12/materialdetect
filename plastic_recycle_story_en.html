@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>🌊 Save Our Planet! The Plastic Recycling Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Background Music - Relaxing Ocean Theme -->
+    <audio id="bgMusic" loop preload="auto" muted>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+        <source src="https://www.soundjay.com/misc/sounds/nature-sound.wav" type="audio/wav">
+        <source src="https://freesound.org/data/previews/316/316847_5123451-lq.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <!-- Narration Audio -->
+    <audio id="narrationAudio">
+        <source src="" type="audio/mp3">
+    </audio>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+        
+         :root {
+            --ocean: #0077b6;
+            --ocean2: #00b4d8;
+            --ocean3: #90e0ef;
+            --ocean4: #caf0f8;
+            --green: #2d6a4f;
+            --green2: #52b788;
+            --green3: #95d5b2;
+            --yellow: #f9c74f;
+            --orange: #f8961e;
+            --red: #ef233c;
+            --sand: #fefae0;
+            --dark: #03045e;
+            --white: #ffffff;
+            --display: 'Fredoka One', cursive;
+            --body: 'Nunito', sans-serif;
+        }
+        /* ═══ ANIMATIONS ═══ */
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes glow {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(0, 119, 182, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 119, 182, 0.6);
+            }
+        }
+        
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 400% 50%;
+            }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .animate-rotate {
+            animation: rotate 20s linear infinite;
+        }
+        
+        .animate-bounce-in {
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .animate-slide-right {
+            animation: slideInRight 0.6s ease-out;
+        }
+        
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        .rainbow-bg {
+            background: linear-gradient(-45deg, #0077b6, #00b4d8, #52b788, #f9c74f, #f8961e);
+            background-size: 400% 400%;
+            animation: rainbow 15s ease infinite;
+        }
+        
+        body {
+            font-family: var(--body);
+            background: var(--sand);
+            color: var(--dark);
+            overflow-x: hidden
+        }
+        /* ═══ SOUND BUTTON ═══ */
+        
+        #soundBtn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 500;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: #fff;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            transition: transform .2s, background .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #soundBtn:hover {
+            transform: scale(1.15);
+            background: var(--ocean)
+        }
+        
+        .game-hud {
+            position: fixed;
+            top: 100px;
+            right: 1.5rem;
+            z-index: 550;
+            background: rgba(2, 24, 68, .95);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, .15);
+            border-radius: 24px;
+            padding: 1rem 1.2rem;
+            min-width: 220px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .game-hud.hidden {
+            display: none !important;
+        }
+        
+        .game-hud .hud-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .65rem;
+        }
+        
+        .game-hud .hud-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .game-hud .hud-label {
+            font-size: .75rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            opacity: .75;
+        }
+        
+        .game-hud .hud-value {
+            font-family: var(--display);
+            font-size: 1rem;
+            text-align: right;
+        }
+        /* ═══ HERO ═══ */
+        
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #03045e 0%, #0077b6 40%, #00b4d8 70%, #90e0ef 90%, #caf0f8 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(1.5px 1.5px at 10% 5%, #fff 0%, transparent 100%), radial-gradient(1px 1px at 25% 12%, #fff 0%, transparent 100%), radial-gradient(2px 2px at 40% 3%, #fff 0%, transparent 100%), radial-gradient(1.5px 1.5px at 60% 8%, #fff 0%, transparent 100%), radial-gradient(1px 1px at 75% 2%, #fff 0%, transparent 100%), radial-gradient(2px 2px at 85% 10%, #fff 0%, transparent 100%), radial-gradient(1.5px 1.5px at 15% 18%, rgba(255, 255, 255, .6) 0%, transparent 100%), radial-gradient(1px 1px at 50% 15%, rgba(255, 255, 255, .5) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .hero-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .06);
+            animation: bubbleRise linear infinite;
+        }
+        
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0
+            }
+            10% {
+                opacity: .4
+            }
+            90% {
+                opacity: .2
+            }
+            100% {
+                transform: translateY(-20vh) scale(1);
+                opacity: 0
+            }
+        }
+        
+        .hero-fish {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: fishSwim linear infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, .3));
+        }
+        
+        @keyframes fishSwim {
+            0% {
+                transform: translateX(-120px)
+            }
+            100% {
+                transform: translateX(110vw)
+            }
+        }
+        
+        .hero-trash {
+            position: absolute;
+            font-size: 1.8rem;
+            animation: trashSink linear infinite;
+            opacity: .5;
+        }
+        
+        @keyframes trashSink {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: .6
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0
+            }
+        }
+        
+        .hero-title {
+            font-family: var(--display);
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            color: #fff;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+            position: relative;
+            z-index: 2;
+            animation: fadeInDown .8s ease both;
+        }
+        
+        .hero-title span {
+            color: var(--yellow);
+            display: inline-block;
+            animation: wobble 2s ease infinite;
+        }
+        
+        @keyframes wobble {
+            0%,
+            100% {
+                transform: rotate(-2deg)
+            }
+            50% {
+                transform: rotate(2deg)
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        
+        .hero-sub {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--ocean4);
+            margin-top: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            animation: fadeInDown .8s .2s ease both;
+        }
+        
+        .hero-scroll {
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 2;
+            animation: bounce 1.5s ease infinite;
+            color: rgba(255, 255, 255, .8);
+            font-size: 2rem;
+        }
+        
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(10px)
+            }
+        }
+        
+        .ocean-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px
+        }
+        
+        .ocean-wave svg {
+            width: 100%;
+            height: 100%
+        }
+        /* ═══ NAV ═══ */
+        
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            padding: .8rem 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, .1);
+            border: 2px solid transparent;
+            color: #fff;
+            font-family: var(--body);
+            font-weight: 700;
+            font-size: .85rem;
+            padding: .5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: var(--yellow);
+            color: var(--dark);
+            border-color: var(--yellow);
+            transform: translateY(-2px);
+        }
+        /* ═══ SECTIONS ═══ */
+        
+        .section {
+            padding: 5rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+        
+        .section-tag {
+            display: inline-block;
+            background: var(--ocean2);
+            color: #fff;
+            font-weight: 800;
+            font-size: .8rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .3rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            line-height: 1.2;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        /* ═══ STORY ═══ */
+        
+        .story-timeline {
+            position: relative;
+            padding-left: 3rem
+        }
+        
+        .story-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1.1rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--ocean2), var(--green2));
+            border-radius: 4px;
+        }
+        
+        .story-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all .6s ease;
+        }
+        
+        .story-item.visible {
+            opacity: 1;
+            transform: translateX(0)
+        }
+        
+        .story-dot {
+            position: absolute;
+            left: -2.5rem;
+            top: .3rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--ocean);
+            border: 4px solid #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+            box-shadow: 0 0 0 3px var(--ocean2);
+        }
+        
+        .story-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 119, 182, .1);
+            border-left: 5px solid var(--ocean2);
+            transition: all .3s ease;
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 119, 182, .2);
+            animation: glow 1s ease-in-out;
+        }
+        
+        .story-card h3 {
+            font-family: var(--display);
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: .5rem
+        }
+        
+        .story-card p {
+            color: #444;
+            line-height: 1.7;
+            font-size: .95rem
+        }
+        
+        .story-card .stat {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--ocean), var(--ocean2));
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.5rem;
+            padding: .4rem 1rem;
+            border-radius: 12px;
+            margin: .5rem 0;
+        }
+        
+        .story-choices {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
+        }
+        
+        .choice-btn {
+            background: linear-gradient(135deg, var(--ocean), var(--ocean2));
+            color: #fff;
+            border: none;
+            font-family: var(--body);
+            font-weight: 700;
+            font-size: .9rem;
+            padding: .8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all .3s;
+            box-shadow: 0 4px 15px rgba(0, 119, 182, .3);
+            animation: pulse 2s infinite;
+        }
+        
+        .choice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 119, 182, .4);
+        }
+        
+        .choice-btn.recycle {
+            background: linear-gradient(135deg, var(--green), var(--green2))
+        }
+        
+        .choice-btn.trash {
+            background: linear-gradient(135deg, var(--red), #ff6b6b)
+        }
+        
+        .choice-btn.litter {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: var(--dark)
+        }
+        
+        .story-item:not(.active) {
+            display: none
+        }
+        
+        .recycle-path,
+        .trash-path,
+        .litter-path {
+            display: none
+        }
+        /* ═══ VIDEO SECTION ═══ */
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .video-card {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all .3s;
+            cursor: pointer;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--ocean2);
+            box-shadow: 0 10px 40px rgba(0, 180, 216, .3);
+        }
+        
+        .video-thumb {
+            position: relative;
+            background: linear-gradient(135deg, #023e8a, #0077b6);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            overflow: hidden;
+        }
+        
+        .video-thumb::after {
+            content: '▶';
+            position: absolute;
+            font-size: 2rem;
+            background: rgba(255, 255, 255, .9);
+            color: var(--dark);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            padding-left: .2rem;
+            font-style: normal;
+        }
+        
+        .video-thumb .v-emoji {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .3))
+        }
+        
+        .video-info {
+            padding: 1.2rem
+        }
+        
+        .video-info h3 {
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: .4rem
+        }
+        
+        .video-info p {
+            color: rgba(255, 255, 255, .6);
+            font-size: .85rem;
+            line-height: 1.5
+        }
+        
+        .video-tag {
+            display: inline-block;
+            background: var(--ocean2);
+            color: #fff;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: .2rem .7rem;
+            border-radius: 50px;
+            margin-top: .5rem;
+        }
+        /* ═══ PLASTIC TYPES ═══ */
+        
+        .plastic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.2rem;
+        }
+        
+        .plastic-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .07);
+            border: 3px solid transparent;
+            transition: all .3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .plastic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .plastic-card.recyclable::before {
+            background: linear-gradient(90deg, var(--green2), var(--green3))
+        }
+        
+        .plastic-card.check-first::before {
+            background: linear-gradient(90deg, var(--yellow), var(--orange))
+        }
+        
+        .plastic-card.avoid::before {
+            background: linear-gradient(90deg, var(--red), #ff6b6b)
+        }
+        
+        .plastic-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+            animation: glow 1s ease-in-out;
+        }
+        
+        .plastic-num {
+            font-family: var(--display);
+            font-size: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto .8rem;
+            color: #fff;
+        }
+        
+        .recyclable .plastic-num {
+            background: linear-gradient(135deg, var(--green), var(--green2))
+        }
+        
+        .check-first .plastic-num {
+            background: linear-gradient(135deg, var(--orange), var(--yellow))
+        }
+        
+        .avoid .plastic-num {
+            background: linear-gradient(135deg, var(--red), #ff6b6b)
+        }
+        
+        .plastic-name {
+            font-weight: 800;
+            font-size: .95rem;
+            color: var(--dark);
+            margin-bottom: .3rem
+        }
+        
+        .plastic-eg {
+            font-size: .75rem;
+            color: #666;
+            margin-bottom: .7rem;
+            line-height: 1.4
+        }
+        
+        .plastic-badge {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: .25rem .8rem;
+            border-radius: 50px;
+            color: #fff;
+        }
+        
+        .recyclable .plastic-badge {
+            background: var(--green2)
+        }
+        
+        .check-first .plastic-badge {
+            background: var(--orange)
+        }
+        
+        .avoid .plastic-badge {
+            background: var(--red)
+        }
+        
+        .type-legend {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .85rem;
+            font-weight: 700
+        }
+        
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%
+        }
+        /* ═══ IMPACT ═══ */
+        
+        .impact-bar {
+            background: linear-gradient(135deg, var(--green), var(--ocean));
+            padding: 4rem 1.5rem;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .impact-title {
+            font-family: var(--display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 2.5rem;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .impact-item {
+            background: rgba(255, 255, 255, .15);
+            border-radius: 20px;
+            padding: 2rem 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .2);
+        }
+        
+        .impact-num {
+            font-family: var(--display);
+            font-size: 3rem;
+            line-height: 1;
+            display: block;
+        }
+        
+        .impact-label {
+            font-size: .9rem;
+            margin-top: .5rem;
+            opacity: .9;
+            font-weight: 600
+        }
+        /* ═══ STEPS ═══ */
+        
+        .steps-container {
+            display: grid;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto
+        }
+        
+        .step-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+            transition: all .3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0)
+        }
+        
+        .step-card:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .12);
+            transform: translateY(-3px)
+        }
+        
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-icon.s1 {
+            background: linear-gradient(135deg, #caf0f8, #90e0ef)
+        }
+        
+        .step-icon.s2 {
+            background: linear-gradient(135deg, #d8f3dc, #95d5b2)
+        }
+        
+        .step-icon.s3 {
+            background: linear-gradient(135deg, #fff3bf, #ffd43b)
+        }
+        
+        .step-icon.s4 {
+            background: linear-gradient(135deg, #ffd6ff, #e7c6ff)
+        }
+        
+        .step-icon.s5 {
+            background: linear-gradient(135deg, #ffd6a5, #fdffb6)
+        }
+        
+        .step-num {
+            font-family: var(--display);
+            font-size: .75rem;
+            color: var(--ocean);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: .3rem;
+        }
+        
+        .step-title {
+            font-family: var(--display);
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: .5rem
+        }
+        
+        .step-desc {
+            color: #555;
+            line-height: 1.7;
+            font-size: .9rem
+        }
+        
+        .step-tip {
+            margin-top: .8rem;
+            background: #f0fff4;
+            border-left: 4px solid var(--green2);
+            padding: .6rem 1rem;
+            border-radius: 0 10px 10px 0;
+            font-size: .85rem;
+            color: var(--green);
+            font-weight: 600;
+        }
+        /* ═══ PLEDGE ═══ */
+        
+        .pledge-box {
+            background: linear-gradient(135deg, rgba(0, 180, 216, .2), rgba(82, 183, 136, .2));
+            border: 2px solid var(--ocean2);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .pledge-title {
+            font-family: var(--display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        
+        .pledge-text {
+            color: rgba(255, 255, 255, .8);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+        
+        .pledge-btn {
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            color: var(--dark);
+            border: none;
+            font-family: var(--body);
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all .3s;
+            box-shadow: 0 6px 20px rgba(249, 199, 79, .4);
+        }
+        
+        .pledge-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(249, 199, 79, .5)
+        }
+        
+        .pledge-confetti {
+            font-size: 2rem;
+            margin-top: 1.5rem;
+            display: none;
+            animation: fadeInDown .5s ease
+        }
+        
+        .pledge-done .pledge-confetti {
+            display: block
+        }
+        
+        .pledge-done .pledge-btn {
+            background: linear-gradient(135deg, var(--green2), var(--green));
+            color: #fff
+        }
+        /* ═══ QUIZ ═══ */
+        
+        .quiz-container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .quiz-question {
+            font-family: var(--display);
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: .8rem
+        }
+        
+        .quiz-opt {
+            background: var(--ocean4);
+            border: 3px solid transparent;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all .25s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+        
+        .quiz-opt:hover {
+            border-color: var(--ocean);
+            transform: translateX(5px)
+        }
+        
+        .quiz-opt.correct {
+            background: #d8f3dc;
+            border-color: var(--green2);
+            animation: correctPop .4s ease
+        }
+        
+        .quiz-opt.wrong {
+            background: #ffe0e0;
+            border-color: var(--red)
+        }
+        
+        @keyframes correctPop {
+            0% {
+                transform: scale(1)
+            }
+            50% {
+                transform: scale(1.05)
+            }
+            100% {
+                transform: scale(1)
+            }
+        }
+        
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+            animation: fadeInDown .4s ease
+        }
+        
+        .quiz-feedback.right {
+            background: #d8f3dc;
+            color: var(--green)
+        }
+        
+        .quiz-feedback.wrong {
+            background: #ffe0e0;
+            color: var(--red)
+        }
+        
+        .quiz-score {
+            font-family: var(--display);
+            font-size: 2rem;
+            color: var(--ocean);
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .quiz-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .quiz-nav button {
+            background: var(--ocean);
+            color: #fff;
+            border: none;
+            font-family: var(--body);
+            font-weight: 700;
+            padding: .7rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all .3s;
+        }
+        
+        .quiz-nav button:hover {
+            background: var(--dark);
+            transform: scale(1.05)
+        }
+        
+        .quiz-progress {
+            display: flex;
+            gap: .4rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-pip {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--ocean3);
+            transition: background .3s;
+        }
+        
+        .quiz-pip.done {
+            background: var(--green2)
+        }
+        
+        .quiz-pip.current {
+            background: var(--ocean)
+        }
+        /* ═══ MODAL ═══ */
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+        
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all
+        }
+        
+        .modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            transform: scale(.9);
+            transition: transform .3s;
+        }
+        
+        .modal-overlay.open .modal-box {
+            transform: scale(1)
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+            transition: color .3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--red)
+        }
+        
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: .5rem
+        }
+        
+        .modal-title {
+            font-family: var(--display);
+            font-size: 1.5rem;
+            margin-bottom: .5rem
+        }
+        
+        .modal-body {
+            color: #555;
+            line-height: 1.7;
+            font-size: .9rem
+        }
+        /* ═══ FOOTER ═══ */
+        
+        footer {
+            background: #020024;
+            color: rgba(255, 255, 255, .5);
+            text-align: center;
+            padding: 2rem;
+            font-size: .85rem;
+        }
+        
+        footer span {
+            color: var(--green3)
+        }
+        /* ═══ SCROLL REVEAL ═══ */
+        
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s ease
+        }
+        
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0)
+        }
+        
+        @media(max-width:600px) {
+            .step-card {
+                flex-direction: column;
+                gap: 1rem
+            }
+            .story-timeline {
+                padding-left: 2rem
+            }
+            .story-dot {
+                left: -1.8rem
+            }
+        }
+        /* ═══ FUN CURSOR ═══ */
+        
+        body {
+            cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='28' font-size='28'>♻️</text></svg>") 16 16, auto
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sound Toggle -->
+    <button id="soundBtn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
+    <button onclick="testAudio()" title="Test Audio" style="position:fixed;top:1.5rem;left:1.5rem;z-index:500;width:50px;height:50px;border-radius:50%;background:var(--green);color:#fff;border:none;cursor:pointer;font-size:1.2rem;">🎵</button>
+
+    <div id="gameHUD" class="game-hud hidden">
+        <div class="hud-row">
+            <div class="hud-label">GAME MODE</div>
+            <div class="hud-value" id="hudStage">Chapter 1</div>
+        </div>
+        <div class="hud-row">
+            <div class="hud-label">Score</div>
+            <div class="hud-value" id="hudScore">0</div>
+        </div>
+        <div class="hud-row">
+            <div class="hud-label">Sound</div>
+            <div class="hud-value" id="hudSound">On</div>
+        </div>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="top">
+        <div class="hero-bubble animate-float" style="width:80px;height:80px;bottom:-20px;left:10%;animation-duration:8s;animation-delay:0s"></div>
+        <div class="hero-bubble animate-float" style="width:50px;height:50px;bottom:-20px;left:30%;animation-duration:6s;animation-delay:2s"></div>
+        <div class="hero-bubble animate-float" style="width:120px;height:120px;bottom:-20px;left:55%;animation-duration:10s;animation-delay:1s"></div>
+        <div class="hero-bubble animate-float" style="width:40px;height:40px;bottom:-20px;left:75%;animation-duration:7s;animation-delay:3s"></div>
+        <div class="hero-bubble animate-float" style="width:90px;height:90px;bottom:-20px;left:88%;animation-duration:9s;animation-delay:.5s"></div>
+
+        <div class="hero-fish animate-float" style="bottom:22%;animation-duration:14s;animation-delay:0s">🐠</div>
+        <div class="hero-fish animate-float" style="bottom:35%;animation-duration:18s;animation-delay:5s;font-size:1.8rem">🐟</div>
+        <div class="hero-fish animate-float" style="bottom:15%;animation-duration:22s;animation-delay:2s;font-size:2rem">🐡</div>
+        <div class="hero-trash" style="left:20%;animation-duration:12s;animation-delay:3s">🍶</div>
+        <div class="hero-trash" style="left:70%;animation-duration:16s;animation-delay:7s">🛍️</div>
+
+        <div style="position:relative;z-index:2">
+            <div style="font-size:5rem;margin-bottom:1rem;animation:fadeInDown .5s ease both;animation: bounceIn 1s ease-out">🌊</div>
+            <h1 class="hero-title animate-bounce-in">Save Our Ocean!<br><span>The Plastic Recycling Adventure</span></h1>
+            <p class="hero-sub animate-slide-left">🌍 Discover why recycling plastic can change the fate of our planet</p>
+
+            <!-- Student Guide -->
+            <div style="background:rgba(255,255,255,.9);border-radius:20px;padding:1.5rem;margin:1.5rem auto;max-width:600px;color:var(--dark);box-shadow:0 8px 32px rgba(0,0,0,.1);animation: bounceIn 1s ease-out" class="rainbow-bg">
+                <h3 style="font-family:var(--display);font-size:1.2rem;margin-bottom:.5rem;color:var(--ocean)">🎓 Welcome Students!</h3>
+                <p style="font-size:.9rem;line-height:1.6;margin-bottom:1rem">
+                    This interactive game will teach you about plastic pollution and recycling. Make choices that affect the environment and learn the consequences of your decisions.
+                </p>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;font-size:.8rem">
+                    <span style="background:var(--green2);color:white;padding:.3rem .6rem;border-radius:10px;animation: pulse 2s infinite">🎮 Interactive Game</span>
+                    <span style="background:var(--yellow);color:var(--dark);padding:.3rem .6rem;border-radius:10px;animation: pulse 2s infinite">🗣️ Voice Narration</span>
+                    <span style="background:var(--ocean2);color:white;padding:.3rem .6rem;border-radius:10px;animation: pulse 2s infinite">📚 Educational Facts</span>
+                    <span style="background:var(--red);color:white;padding:.3rem .6rem;border-radius:10px;animation: pulse 2s infinite">🌍 Real Impact</span>
+                </div>
+            </div>
+
+            <div style="margin-top:1.5rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:2">
+                <a href="#story" class="nav-btn animate-pulse" style="text-decoration:none;background:var(--yellow);color:var(--dark)" onclick="playClick()">📖 Start the Journey</a>
+                <a href="#types" class="nav-btn animate-pulse" style="text-decoration:none" onclick="playClick()">♻️ Learn About Plastic</a>
+            </div>
+        </div>
+        <div class="hero-scroll">▼</div>
+        <div class="ocean-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 C200,120 400,0 600,60 C800,120 1000,0 1200,60 L1200,120 L0,120 Z" fill="#caf0f8"/>
+    </svg>
+        </div>
+    </section>
+
+    <!-- ═══ NAV ═══ -->
+    <nav class="nav-bar">
+        <button class="nav-btn" data-target="#story">📖 Story</button>
+        <button class="nav-btn" data-target="#story">🎮 Play Game</button>
+        <button class="nav-btn" data-target="#videos">🎬 Videos</button>
+        <button class="nav-btn" data-target="#types">♻️ Plastic Types</button>
+        <button class="nav-btn" data-target="#tutorial">📋 How To Recycle</button>
+        <button class="nav-btn" data-target="#quiz">🧠 Quiz</button>
+        <button class="nav-btn" data-target="#pledge">🌱 My Pledge</button>
+    </nav>
+
+    <!-- ═══ STORY ═══ -->
+    <div id="story" style="background:linear-gradient(180deg,#caf0f8 0%,#e8f5e9 100%);padding:5rem 1.5rem">
+        <div class="section" style="padding:0;max-width:800px;margin:0 auto">
+            <span class="section-tag">📖 The Story</span>
+            <h2 class="section-title">A Plastic Bottle's Journey: From Factory to Ocean</h2>
+            <p style="color:#444;margin-bottom:3rem;font-size:1rem;line-height:1.7" data-reveal>
+                Every plastic bottle has a story. But YOU get to decide the ending! Play the interactive game below and see how your choices affect the environment.
+            </p>
+            <div style="text-align:center;margin-bottom:2rem">
+                <button class="pledge-btn" id="startGameBtn" style="border: 2px solid #000; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); z-index: 1000; position: relative;">🎮 Start the Game!</button>
+            </div>
+
+            <div class="story-timeline" id="storyTimeline">
+                <div class="story-item active" id="chapter1">
+                    <div class="story-dot">🏭</div>
+                    <div class="story-card">
+                        <h3>Chapter 1: Birth</h3>
+                        <p>A brand-new plastic bottle is born in a factory. It's filled with crystal-clear mineral water, ready to be placed on a supermarket shelf. It was made from oil — manufacturing it used <span class="stat">250ml</span> of petroleum.</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="nextChapter(2)">Continue the Journey ➡️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item" id="chapter2">
+                    <div class="story-dot">🛒</div>
+                    <div class="story-card">
+                        <h3>Chapter 2: Your Choice!</h3>
+                        <p>Xiao Ming bought this bottle of water from the supermarket. After finishing it, he has three options:</p>
+                        <div class="story-choices">
+                            <button class="choice-btn recycle" onclick="makeChoice('recycle')">♻️ Recycle it properly</button>
+                            <button class="choice-btn trash" onclick="makeChoice('trash')">🗑️ Throw in trash</button>
+                            <button class="choice-btn litter" onclick="makeChoice('litter')">🚫 Litter it</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item recycle-path" id="chapter3-recycle">
+                    <div class="story-dot">🚛</div>
+                    <div class="story-card">
+                        <h3>Chapter 3: The Recycling Path</h3>
+                        <p>Because it was sorted for recycling, the bottle goes to a recycling center! Here it gets cleaned, shredded, and melted into pellets. These pellets can become new products.</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="nextChapter(6)">See what it becomes! ✨</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item trash-path" id="chapter3-trash">
+                    <div class="story-dot">🚛</div>
+                    <div class="story-card">
+                        <h3>Chapter 3: The Landfill Path</h3>
+                        <p>Because it wasn't sorted for recycling, the bottle ends up at a landfill — or is incinerated. Burning it releases toxic gases into the air we breathe.</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="nextChapter(4)">Continue to the ocean... 🌊</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item litter-path" id="chapter4-litter">
+                    <div class="story-dot">🌊</div>
+                    <div class="story-card" style="border-color:var(--red)">
+                        <h3>Chapter 4: Nightmare in the Ocean</h3>
+                        <p>You littered the bottle! It blows in the wind and flows into rivers, eventually reaching the ocean. Every year, <span class="stat">8 million tonnes</span> of plastic enter the ocean! This bottle drifts for hundreds of years, broken
+                            down by sunlight into billions of tiny fragments — <strong>microplastics</strong>. Fish mistake them for food and swallow them.</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="nextChapter(5)">What happens next? 😱</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item trash-path litter-path" id="chapter4-trash">
+                    <div class="story-dot">🌊</div>
+                    <div class="story-card" style="border-color:var(--red)">
+                        <h3>Chapter 4: Into the Ocean</h3>
+                        <p>The bottle from the landfill/incinerator or litter eventually reaches the ocean. Every year, <span class="stat">8 million tonnes</span> of plastic enter the ocean! This bottle drifts for hundreds of years, broken down by sunlight
+                            into billions of tiny fragments — <strong>microplastics</strong>. Fish mistake them for food and swallow them.</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="nextChapter(5)">What happens next? 😱</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item trash-path litter-path" id="chapter5">
+                    <div class="story-dot" style="background:var(--yellow)">😱</div>
+                    <div class="story-card" style="border-color:var(--orange)">
+                        <h3>Chapter 5: Back on Your Plate!</h3>
+                        <p>Scientists discovered that humans consume on average the equivalent of a <span class="stat">credit card</span> in microplastics every single week! That fish who swallowed microplastics? It ended up on your dinner table…</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="showEnding('bad')">See the bad ending... 💔</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-item recycle-path" id="chapter6">
+                    <div class="story-dot" style="background:var(--green)">✨</div>
+                    <div class="story-card" style="border-color:var(--green2)">
+                        <h3>Chapter 6: A Happy Ending!</h3>
+                        <p>Recycled, it could become a new bottle, a T-shirt, a carpet, or even a park bench. <strong>One bottle, endless possibilities!</strong> 🎉</p>
+                        <div class="story-choices">
+                            <button class="choice-btn" onclick="showEnding('good')">See the good ending! 🌟</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gameEnding" style="display:none;margin-top:3rem">
+                <div class="impact-bar animate-bounce-in">
+                    <h2 class="impact-title">Your Game Results!</h2>
+                    <div class="impact-grid">
+                        <div class="impact-item animate-slide-left">
+                            <span class="impact-num" id="scoreDisplay">0</span>
+                            <div class="impact-label">Your Recycling Score</div>
+                        </div>
+                        <div class="impact-item animate-slide-right">
+                            <span class="impact-num" id="impactDisplay">High</span>
+                            <div class="impact-label">Environmental Impact</div>
+                        </div>
+                        <div class="impact-item animate-bounce-in">
+                            <span class="impact-num" id="livesDisplay">10M</span>
+                            <div class="impact-label">Marine Lives Affected</div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:2rem">
+                        <p id="endingMessage" style="color:#fff;font-size:1.2rem;margin-bottom:2rem"></p>
+                        <button class="pledge-btn animate-pulse" onclick="restartGame()">🔄 Play Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ IMPACT NUMBERS ═══ -->
+    <div class="impact-bar">
+        <h2 class="impact-title" data-reveal>🌍 Did You Know? These Numbers Are Shocking…</h2>
+        <div class="impact-grid">
+            <div class="impact-item" data-reveal>
+                <span class="impact-num">450 years</span>
+                <div class="impact-label">Time for a single plastic bottle to fully break down in nature</div>
+            </div>
+            <div class="impact-item" data-reveal>
+                <span class="impact-num">91%</span>
+                <div class="impact-label">Only 9% of all plastic ever produced has been recycled. The other 91% is discarded.</div>
+            </div>
+            <div class="impact-item" data-reveal>
+                <span class="impact-num">10 million</span>
+                <div class="impact-label">Sea creatures affected by plastic pollution every single day</div>
+            </div>
+            <div class="impact-item" data-reveal>
+                <span class="impact-num">70%</span>
+                <div class="impact-label">Recycling one aluminium can saves enough energy to power a TV for 3 hours</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VIDEO SECTION ═══ -->
+    <div id="videos" style="background:var(--dark);padding:5rem 1.5rem">
+        <div style="max-width:1100px;margin:0 auto">
+            <span class="section-tag" style="background:var(--yellow);color:var(--dark)" data-reveal>🎬 Video Learning</span>
+            <h2 class="section-title" style="color:#fff" data-reveal>Watch & Learn Faster!</h2>
+            <p style="color:rgba(255,255,255,.6);margin-bottom:2.5rem;max-width:600px" data-reveal>Click the videos below to dive deeper into plastic pollution and recycling.</p>
+            <div class="video-grid">
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/watch?v=RS7IzU2VJIQ','How Does Plastic Pollution Affect Ocean Life?');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">🌊🐢</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>How Does Plastic Pollution Affect Ocean Life?</h3>
+                        <p>Learn how plastic waste threatens marine animals and what we can do about it</p>
+                        <span class="video-tag">🌊 Ocean Protection</span>
+                    </div>
+                </div>
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/watch?v=Yomf5pBN8dY','How Does Plastic Recycling Actually Work?');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">♻️🏭</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>How Does Plastic Recycling Actually Work?</h3>
+                        <p>Step inside a recycling plant and see how a bottle becomes a brand-new product</p>
+                        <span class="video-tag">🏭 Recycling Process</span>
+                    </div>
+                </div>
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/watch?v=zZzo6I8OhpU','Microplastics: The Invisible Threat');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">🔬😰</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Microplastics: The Invisible Threat</h3>
+                        <p>Discover how microplastics enter the food chain and affect human health</p>
+                        <span class="video-tag">🔬 Science</span>
+                    </div>
+                </div>
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/results?search_query=plastic+recycling+kids','Recycling Starts With You!');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">👶♻️</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Recycling Starts With You!</h3>
+                        <p>How kids and teens can practise plastic recycling in everyday life</p>
+                        <span class="video-tag">🧒 Youth Action</span>
+                    </div>
+                </div>
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/results?search_query=plastic+alternatives+sustainability','Life Without Single-Use Plastic');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">🌿💚</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Life Without Single-Use Plastic</h3>
+                        <p>Practical, plastic-free lifestyle tips to make your daily routine greener</p>
+                        <span class="video-tag">🌿 Green Living</span>
+                    </div>
+                </div>
+                <div class="video-card" onclick="openVideo('https://www.youtube.com/results?search_query=plastic+bottle+upcycle+DIY','Upcycle It! DIY Plastic Creations');playClick()">
+                    <div class="video-thumb">
+                        <div class="v-emoji">🎨🔄</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Upcycle It! DIY Plastic Creations</h3>
+                        <p>Turn old plastic bottles into planters, decorations, and more — super fun!</p>
+                        <span class="video-tag">🎨 Creative Crafts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PLASTIC TYPES ═══ -->
+    <div id="types" style="background:linear-gradient(180deg,#f0fff4 0%,#fffef0 100%);padding:5rem 1.5rem">
+        <div style="max-width:1100px;margin:0 auto">
+            <span class="section-tag" data-reveal>♻️ Know Your Plastic</span>
+            <h2 class="section-title" data-reveal>Which Plastics Can Be Recycled?</h2>
+            <p style="color:#444;margin-bottom:2rem;font-size:.95rem;line-height:1.7" data-reveal>
+                The number on the bottom of a plastic item (1–7) is its <strong>Resin Identification Code</strong>.<br>Tap each card to learn more!
+            </p>
+            <div class="type-legend" data-reveal>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--green2)"></div>Recyclable in most areas</div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--orange)"></div>Recyclable in some areas (check locally)</div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--red)"></div>Generally not accepted</div>
+            </div>
+            <div class="plastic-grid">
+                <div class="plastic-card recyclable" onclick="showPlasticInfo(1);playPop()">
+                    <div class="plastic-num">1</div>
+                    <div class="plastic-name">PET</div>
+                    <div class="plastic-eg">Water bottles<br>Fizzy drink bottles<br>Cooking oil bottles</div>
+                    <span class="plastic-badge">✅ Recyclable</span>
+                </div>
+                <div class="plastic-card recyclable" onclick="showPlasticInfo(2);playPop()">
+                    <div class="plastic-num">2</div>
+                    <div class="plastic-name">HDPE</div>
+                    <div class="plastic-eg">Milk jugs<br>Shampoo bottles<br>Cleaning product bottles</div>
+                    <span class="plastic-badge">✅ Recyclable</span>
+                </div>
+                <div class="plastic-card check-first" onclick="showPlasticInfo(3);playPop()">
+                    <div class="plastic-num">3</div>
+                    <div class="plastic-name">PVC</div>
+                    <div class="plastic-eg">Pipes<br>Window frames<br>Cling film</div>
+                    <span class="plastic-badge">⚠️ Check First</span>
+                </div>
+                <div class="plastic-card check-first" onclick="showPlasticInfo(4);playPop()">
+                    <div class="plastic-num">4</div>
+                    <div class="plastic-name">LDPE</div>
+                    <div class="plastic-eg">Plastic shopping bags<br>Bread bags<br>Cling wrap</div>
+                    <span class="plastic-badge">⚠️ Check First</span>
+                </div>
+                <div class="plastic-card recyclable" onclick="showPlasticInfo(5);playPop()">
+                    <div class="plastic-num">5</div>
+                    <div class="plastic-name">PP</div>
+                    <div class="plastic-eg">Yoghurt containers<br>Takeaway boxes<br>Bottle caps</div>
+                    <span class="plastic-badge">✅ Recyclable</span>
+                </div>
+                <div class="plastic-card avoid" onclick="showPlasticInfo(6);playPop()">
+                    <div class="plastic-num">6</div>
+                    <div class="plastic-name">PS</div>
+                    <div class="plastic-eg">Foam food containers<br>Disposable cups<br>Egg cartons</div>
+                    <span class="plastic-badge">❌ Hard to Recycle</span>
+                </div>
+                <div class="plastic-card avoid" onclick="showPlasticInfo(7);playPop()">
+                    <div class="plastic-num">7</div>
+                    <div class="plastic-name">OTHER</div>
+                    <div class="plastic-eg">Baby bottles<br>Sports water bottles<br>CDs</div>
+                    <span class="plastic-badge">❌ Usually Not Accepted</span>
+                </div>
+            </div>
+
+            <div style="margin-top:2rem;background:linear-gradient(135deg,#e8f4f8,#d8f3dc);border-radius:20px;padding:1.5rem 2rem" data-reveal>
+                <h3 style="font-family:var(--display);color:var(--dark);margin-bottom:.5rem">💡 Quick Tips</h3>
+                <p style="color:#444;font-size:.9rem;line-height:1.7">
+                    <strong>Numbers 1 and 2</strong> are the most widely recycled — they can go in the recycling bin in most cities.<br>
+                    <strong>Before recycling:</strong> Rinse clean, remove the cap (recycle separately), and squash flat to save space!<br> When in doubt, check your local recycling guide — or simply reduce your use!
+                </p>
+            </div>
+
+            <div style="margin-top:3rem;background:linear-gradient(135deg,#fff0f3,#fff8e1);border-radius:24px;padding:2rem" data-reveal>
+                <h3 style="font-family:var(--display);font-size:1.5rem;margin-bottom:1rem">🚫 These Plastics Don't Go in the Bin!</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem">
+                    <div style="background:#fff;border-radius:14px;padding:1rem;border-left:4px solid var(--red)">
+                        <div style="font-size:1.5rem">🛍️</div>
+                        <div style="font-weight:700;margin:.3rem 0">Plastic Bags</div>
+                        <div style="font-size:.8rem;color:#666">Take to supermarket drop-off points</div>
+                    </div>
+                    <div style="background:#fff;border-radius:14px;padding:1rem;border-left:4px solid var(--red)">
+                        <div style="font-size:1.5rem">🥤</div>
+                        <div style="font-weight:700;margin:.3rem 0">Straws</div>
+                        <div style="font-size:.8rem;color:#666">Too small — jams machines. Put in general waste.</div>
+                    </div>
+                    <div style="background:#fff;border-radius:14px;padding:1rem;border-left:4px solid var(--red)">
+                        <div style="font-size:1.5rem">📦</div>
+                        <div style="font-weight:700;margin:.3rem 0">Foam/Polystyrene</div>
+                        <div style="font-size:.8rem;color:#666">Needs a special recycling drop-off point</div>
+                    </div>
+                    <div style="background:#fff;border-radius:14px;padding:1rem;border-left:4px solid var(--red)">
+                        <div style="font-size:1.5rem">🍕</div>
+                        <div style="font-weight:700;margin:.3rem 0">Greasy Containers</div>
+                        <div style="font-size:.8rem;color:#666">Wash them clean before recycling</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TUTORIAL ═══ -->
+    <div id="tutorial" style="background:linear-gradient(180deg,#fff8e1 0%,#e8f4f8 100%);padding:5rem 1.5rem">
+        <div style="max-width:800px;margin:0 auto">
+            <span class="section-tag" data-reveal>📋 Step-by-Step Guide</span>
+            <h2 class="section-title" data-reveal>How to Recycle Plastic Correctly — 5 Easy Steps!</h2>
+            <p style="color:#444;margin-bottom:2.5rem;font-size:.95rem;line-height:1.7" data-reveal>
+                Many people put plastic in the recycling bin — but doing it wrong can mean the whole batch gets rejected.<br>Follow these 5 steps to make sure your plastic is actually recycled!
+            </p>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-icon s1">🔍</div>
+                    <div>
+                        <div class="step-num">Step 1</div>
+                        <div class="step-title">Check the Number on the Bottom</div>
+                        <div class="step-desc">Flip the container over and look for the recycling number (1–7). Numbers 1 and 2 can usually go straight into the recycling bin. Numbers 3, 6, and 7 often need special handling — or just put them in general waste.</div>
+                        <div class="step-tip">💡 Take a photo on your phone so you can refer to it later!</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon s2">🚿</div>
+                    <div>
+                        <div class="step-num">Step 2</div>
+                        <div class="step-title">Give It a Rinse</div>
+                        <div class="step-desc">Rinse the inside with water to remove food scraps and grease. No need for washing-up liquid — a quick rinse is enough. Containers with food residue can contaminate an entire load of recycling, sending everything to landfill!</div>
+                        <div class="step-tip">💡 It doesn't need to be spotless — just no food left inside!</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon s3">🏷️</div>
+                    <div>
+                        <div class="step-num">Step 3</div>
+                        <div class="step-title">Remove Labels and Lids</div>
+                        <div class="step-desc">Most paper labels can stay on. Plastic lids are often a different plastic type — recycle them separately, or check local rules. Foil-lined packaging is usually not recyclable.</div>
+                        <div class="step-tip">💡 Bottle caps are usually PP (#5) — recycle them separately!</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon s4">📦</div>
+                    <div>
+                        <div class="step-num">Step 4</div>
+                        <div class="step-title">Squash It Flat!</div>
+                        <div class="step-desc">Crushing plastic bottles can save up to 70% of space in the bin, allowing more to be collected and reducing transport emissions. Just stomp on it or squash with your hand!</div>
+                        <div class="step-tip">💡 Step on it after squashing to keep it flat in the bin!</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon s5">🗑️</div>
+                    <div>
+                        <div class="step-num">Step 5</div>
+                        <div class="step-title">Put It in the Right Bin</div>
+                        <div class="step-desc">Place clean, prepared plastic into the dedicated recycling bin (usually blue or green). Never use a plastic bag to collect recyclables — bags jam recycling machinery! If there's a recycling centre nearby, you can drop off directly.</div>
+                        <div class="step-tip">💡 Remember: NOT in a plastic bag — it will jam the machine!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ QUIZ SECTION ═══ -->
+    <div id="quiz" style="background:linear-gradient(180deg,#e8f4f8 0%,#d8f3dc 100%);padding:5rem 1.5rem">
+        <div style="max-width:800px;margin:0 auto">
+            <span class="section-tag" data-reveal>🧠 Test Your Knowledge</span>
+            <h2 class="section-title" data-reveal>Recycling Quiz Challenge!</h2>
+            <p style="color:#444;margin-bottom:2rem" data-reveal>See how much you've learned. Answer all 5 questions to get your score!</p>
+
+            <div class="quiz-container" data-reveal>
+                <div class="quiz-progress" id="quizProgress"></div>
+                <div class="quiz-question" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <div class="quiz-nav">
+                    <button id="nextBtn" onclick="nextQuestion()" style="display:none">Next Question ➡️</button>
+                </div>
+                <div class="quiz-score" id="quizScore" style="display:none"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PLEDGE ═══ -->
+    <div id="pledge" style="background:var(--dark);padding:5rem 1.5rem;text-align:center">
+        <div class="pledge-box" id="pledgeBox">
+            <div style="font-size:3rem;margin-bottom:1rem">🌱</div>
+            <h2 class="pledge-title">I Pledge to Protect Our Planet!</h2>
+            <p class="pledge-text">
+                Knowledge is the first step — action is what creates change.<br> Today, will you commit to recycling plastic properly<br>and spreading the habit to the people around you?
+            </p>
+            <button class="pledge-btn" id="pledgeBtn" onclick="takePledge()">
+      🤝 I Pledge! I'll Start Recycling!
+    </button>
+            <div class="pledge-confetti" id="pledgeConfetti">
+                🎉🌍♻️🎊💚🌊✨🎉
+                <p style="font-size:1rem;margin-top:.8rem;color:rgba(255,255,255,.9)">Amazing! You are now an Earth Guardian! 🌍</p>
+            </div>
+        </div>
+
+        <div style="max-width:700px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem" data-reveal>
+            <div style="background:rgba(255,255,255,.07);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.1)">
+                <div style="font-size:2rem;margin-bottom:.5rem">🏠</div>
+                <div style="color:#fff;font-weight:700;margin-bottom:.3rem">At Home</div>
+                <div style="color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.6">Set up 3 bins: recyclables, general waste, and food scraps</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.1)">
+                <div style="font-size:2rem;margin-bottom:.5rem">🏫</div>
+                <div style="color:#fff;font-weight:700;margin-bottom:.3rem">At School</div>
+                <div style="color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.6">Bring a reusable water bottle and say no to single-use plastic</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.1)">
+                <div style="font-size:2rem;margin-bottom:.5rem">🛒</div>
+                <div style="color:#fff;font-weight:700;margin-bottom:.3rem">When Shopping</div>
+                <div style="color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.6">Bring your own bag, refuse plastic bags, and choose loose produce</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <div style="font-size:1.5rem;margin-bottom:.5rem">🌊 ♻️ 🌍</div>
+        <p>Every recycling action makes the Earth a little better. <span>Start changing today!</span></p>
+        <p style="margin-top:.5rem;font-size:.75rem">Made for students · Environmental Education Exhibition</p>
+        <p style="margin-top:.5rem;font-size:.7rem;color:#666">
+            <strong>Open Source:</strong> This educational game is free to use and modify under the MIT License.<br>
+            <a href="https://github.com" target="_blank" style="color:#0077b6;text-decoration:none">View Source Code</a> |
+            <a href="https://opensource.org/licenses/MIT" target="_blank" style="color:#0077b6;text-decoration:none">MIT License</a>
+        </p>
+    </footer>
+
+    <!-- ═══ INFO MODAL ═══ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-box">
+            <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕</button>
+            <div class="modal-icon" id="modalIcon"></div>
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- ═══ VIDEO MODAL ═══ -->
+    <div class="modal-overlay" id="videoModal" onclick="closeVideoModal(event)">
+        <div class="modal-box" style="max-width:700px">
+            <button class="modal-close" onclick="document.getElementById('videoModal').classList.remove('open')">✕</button>
+            <div id="videoModalTitle" style="font-family:var(--display);font-size:1.3rem;font-weight:700;margin-bottom:1rem"></div>
+            <div style="background:#000;border-radius:12px;overflow:hidden;margin-bottom:1rem">
+                <div style="padding:2rem;text-align:center;color:#fff">
+                    <div style="font-size:3rem;margin-bottom:1rem">🎬</div>
+                    <p id="videoModalDesc" style="margin-bottom:1.5rem;font-size:1rem"></p>
+                    <a id="videoLink" href="#" target="_blank" style="background:var(--yellow);color:var(--dark);text-decoration:none;padding:.8rem 2rem;border-radius:50px;font-weight:800;display:inline-block;font-size:1rem">
+          ▶ Watch on YouTube
+        </a>
+                </div>
+            </div>
+            <p style="color:#888;font-size:.8rem;text-align:center">Opens in a new tab on YouTube</p>
+        </div>
+    </div>
+
+    <script>
+        // ─── Page Load Initialization ───
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing...');
+
+            // Fix nav button click handlers
+            document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    console.log('Nav button clicked:', index, btn.textContent.trim());
+                    const target = btn.getAttribute('data-target');
+                    if (target) {
+                        scrollTo(target);
+                        playClick();
+                    } else {
+                        console.error('No data-target for button:', btn.textContent.trim());
+                    }
+                });
+            });
+
+            console.log('Quiz elements check:');
+            console.log('quizProgress:', document.getElementById('quizProgress'));
+            console.log('quizQuestion:', document.getElementById('quizQuestion'));
+            console.log('quizOptions:', document.getElementById('quizOptions'));
+            console.log('Story elements check:');
+            console.log('story:', document.getElementById('story'));
+            console.log('chapter1:', document.getElementById('chapter1'));
+            // Fix start game button
+            const startGameBtn = document.getElementById('startGameBtn');
+            if (startGameBtn) {
+                startGameBtn.addEventListener('click', function() {
+                    console.log('Start game button clicked');
+                    startGameMode();
+                });
+            } else {
+                console.error('Start game button not found');
+            }
+            console.log('Nav buttons:', document.querySelectorAll('.nav-btn'));
+            console.log('Nav buttons length:', document.querySelectorAll('.nav-btn').length);
+
+            // Test nav buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+                console.log(`Nav button ${index}:`, btn.textContent.trim(), 'onclick:', btn.onclick);
+            });
+
+            buildQuiz(); // Initialize quiz when DOM is ready
+        });
+
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error, 'at line:', e.lineno, 'in file:', e.filename);
+        });
+
+        // ─── Sound Engine (Web Audio API) ───
+        let audioCtx = null;
+        let soundOn = true;
+
+        function getCtx() {
+            if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
+
+        function playTone(freq, type, dur, vol = 0.15) {
+            if (!soundOn) return;
+            try {
+                const ctx = getCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(vol, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + dur);
+            } catch (e) {}
+        }
+
+        function playClick() {
+            console.log('playClick called');
+            playTone(880, 'sine', .08, .1)
+        }
+
+        function playPop() {
+            playTone(660, 'triangle', .12, .12)
+        }
+
+        function playCorrect() {
+            playTone(523, 'sine', .15, .15);
+            setTimeout(() => playTone(659, 'sine', .15, .15), 120);
+            setTimeout(() => playTone(784, 'sine', .25, .15), 240);
+        }
+
+        function playWrong() {
+            playTone(200, 'sawtooth', .3, .12)
+        }
+
+        function playPledge() {
+            [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 'sine', .3, .15), i * 150));
+        }
+
+        function playOcean() {
+            if (!soundOn) return;
+            try {
+                const ctx = getCtx();
+                const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+                const data = buf.getChannelData(0);
+                for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * 0.04;
+                const src = ctx.createBufferSource();
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 400;
+                src.buffer = buf;
+                src.connect(filter);
+                filter.connect(ctx.destination);
+                src.start();
+                src.stop(ctx.currentTime + 2);
+            } catch (e) {}
+        }
+
+        function toggleSound() {
+            soundOn = !soundOn;
+            const soundBtn = document.getElementById('soundBtn');
+            if (soundBtn) soundBtn.textContent = soundOn ? '🔊' : '🔇';
+            const hudSound = document.getElementById('hudSound');
+            if (hudSound) hudSound.textContent = soundOn ? 'On' : 'Off';
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) {
+                bgMusic.muted = !soundOn;
+                if (soundOn) {
+                    playBackgroundMusic();
+                } else {
+                    bgMusic.pause();
+                }
+            }
+            if (soundOn) playClick();
+        }
+
+        function playBackgroundMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            if (!bgMusic || !soundOn) return;
+            bgMusic.muted = false;
+            bgMusic.volume = 0.22;
+            const promise = bgMusic.play();
+            if (promise !== undefined) {
+                promise.then(() => {
+                    console.log('Background music playing');
+                }).catch((error) => {
+                    console.log('Background music blocked, will try after interaction:', error);
+                });
+            }
+        }
+
+        function stopBackgroundMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) bgMusic.pause();
+        }
+
+        function updateHUD() {
+            const hudScore = document.getElementById('hudScore');
+            const hudStage = document.getElementById('hudStage');
+            const hudSound = document.getElementById('hudSound');
+            if (hudScore) hudScore.textContent = gameScore;
+            if (hudStage) hudStage.textContent = `Chapter ${typeof currentChapter === 'number' ? currentChapter : currentChapter}`;
+            if (hudSound) hudSound.textContent = soundOn ? 'On' : 'Off';
+        }
+
+        function showHUD() {
+            const hud = document.getElementById('gameHUD');
+            if (hud) hud.classList.remove('hidden');
+            updateHUD();
+        }
+
+        function hideHUD() {
+            const hud = document.getElementById('gameHUD');
+            if (hud) hud.classList.add('hidden');
+        }
+
+        function startGameMode() {
+            gameActive = true;
+            showHUD();
+            if (soundOn) playBackgroundMusic();
+            restartGame();
+        }
+
+        function testAudio() {
+            console.log('Testing audio...');
+            // Test background music
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) {
+                bgMusic.muted = false;
+                bgMusic.volume = 0.3;
+                bgMusic.play().then(() => {
+                    console.log('Background music playing');
+                    setTimeout(() => {
+                        bgMusic.pause();
+                        console.log('Background music test complete');
+                    }, 3000);
+                }).catch(error => {
+                    console.log('Background music failed:', error);
+                });
+            }
+
+            // Test narration
+            setTimeout(() => {
+                speakText('Hello! This is a test of the voice narration system.');
+            }, 1000);
+        }
+        soundOn = true;
+        document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
+        const bgMusic = document.getElementById('bgMusic');
+
+        if (soundOn && bgMusic) {
+            bgMusic.muted = true;
+            bgMusic.volume = 0.22;
+        }
+
+        // ─── Scroll nav ───
+        function scrollTo(id) {
+            console.log('scrollTo called with id:', id);
+            const element = document.querySelector(id);
+            console.log('Element found:', element);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } else {
+                console.error('Element not found for id:', id);
+            }
+        }
+
+        // ─── Intersection Observers ───
+        const storyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    playOcean();
+                }
+            })
+        }, {
+            threshold: .2
+        });
+        document.querySelectorAll('.story-item,.step-card').forEach(el => storyObserver.observe(el));
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.classList.add('revealed')
+            })
+        }, {
+            threshold: .15
+        });
+        document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+        document.querySelectorAll('.step-card').forEach((card, i) => {
+            card.style.transitionDelay = `${i*0.1}s`;
+        });
+
+        // ─── Plastic info modal ───
+        const plasticInfo = {
+            1: {
+                icon: '🍶',
+                name: 'PET (Polyethylene Terephthalate)',
+                body: '<strong>Found in:</strong> Water bottles, fizzy drink bottles, cooking oil bottles<br><br><strong>Recyclable? ✅ Widely accepted</strong><br><br>PET is one of the most recycled plastics. It can become: new bottles, polyester clothing (your sports kit might be recycled PET!), and carpets.<br><br><strong>Note:</strong> Use once only — reusing PET bottles may release harmful substances.'
+            },
+            2: {
+                icon: '🥛',
+                name: 'HDPE (High-Density Polyethylene)',
+                body: '<strong>Found in:</strong> Milk jugs, shampoo bottles, cleaning product bottles<br><br><strong>Recyclable? ✅ Widely accepted</strong><br><br>HDPE is very durable and has high recycling rates. It becomes: plastic timber, pipes, plant pots, and outdoor furniture.<br><br><strong>Good news:</strong> This plastic is BPA-free and relatively safe!'
+            },
+            3: {
+                icon: '⚠️',
+                name: 'PVC (Polyvinyl Chloride)',
+                body: '<strong>Found in:</strong> Pipes, window frames, flooring, cling film<br><br><strong>Recyclable? ⚠️ Difficult to recycle</strong><br><br>PVC recycling is complex and most centres do not accept it. It contains chlorine and releases toxic gases when burned.<br><br><strong>Advice:</strong> Avoid PVC products where possible, especially packaging that touches food.'
+            },
+            4: {
+                icon: '🛍️',
+                name: 'LDPE (Low-Density Polyethylene)',
+                body: '<strong>Found in:</strong> Plastic shopping bags, bread bags, cling wrap<br><br><strong>Recyclable? ⚠️ Partly recyclable</strong><br><br>Regular recycling bins usually do not accept plastic bags because they tangle in the machinery! Large supermarkets often have dedicated plastic bag drop-off points.<br><br><strong>Best option:</strong> Use reusable bags — reduce from the source!'
+            },
+            5: {
+                icon: '🥡',
+                name: 'PP (Polypropylene)',
+                body: '<strong>Found in:</strong> Takeaway boxes, yoghurt containers, bottle caps, straws<br><br><strong>Recyclable? ✅ Recyclable</strong><br><br>PP is heat-resistant and commonly used in microwaveable containers. Recycled into: car parts, traffic lights, brushes, and rubbish bins.<br><br><strong>Note:</strong> Straws are PP but too small for machinery — do not recycle separately!'
+            },
+            6: {
+                icon: '🧊',
+                name: 'PS (Polystyrene / Foam)',
+                body: '<strong>Found in:</strong> Foam food containers, disposable cups, egg cartons, packaging foam<br><br><strong>Recyclable? ❌ Very hard to recycle</strong><br><br>PS (also called "white pollution") has almost no recycling value and most cities do not accept it. It is light but bulky, making transport costs very high.<br><br><strong>Advice:</strong> Refuse foam packaging whenever possible — bring your own container!'
+            },
+            7: {
+                icon: '🔯',
+                name: 'OTHER (Mixed / Other Plastics)',
+                body: '<strong>Found in:</strong> Baby bottles, sports water bottles, CDs<br><br><strong>Recyclable? ❌ Usually not accepted</strong><br><br>Category 7 covers many different plastics. Hard plastics containing BPA (polycarbonate) may pose health risks.<br><br><strong>Advice:</strong> Reduce use and choose stainless steel or glass alternatives!'
+            }
+        };
+
+        function showPlasticInfo(num) {
+            const info = plasticInfo[num];
+            document.getElementById('modalIcon').textContent = info.icon;
+            document.getElementById('modalTitle').textContent = `#${num} ${info.name}`;
+            document.getElementById('modalBody').innerHTML = info.body;
+            document.getElementById('modalOverlay').classList.add('open');
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'modalOverlay') document.getElementById('modalOverlay').classList.remove('open')
+        }
+
+        function openVideo(url, title) {
+            document.getElementById('videoModalTitle').textContent = '🎬 ' + title;
+            document.getElementById('videoModalDesc').textContent = title;
+            document.getElementById('videoLink').href = url;
+            document.getElementById('videoModal').classList.add('open');
+        }
+
+        function closeVideoModal(e) {
+            if (e.target.id === 'videoModal') document.getElementById('videoModal').classList.remove('open')
+        }
+
+        // ─── GAME LOGIC ───
+        let gameScore = 0;
+        let currentChapter = 1;
+        let playerChoice = '';
+        let gameActive = false;
+
+        function nextChapter(id) {
+            console.log('nextChapter called with:', id, 'currentChapter was:', currentChapter);
+
+            const prevId = typeof currentChapter === 'number' ? `chapter${currentChapter}` : `chapter${currentChapter}`;
+            const prevEl = document.getElementById(prevId);
+            if (prevEl) prevEl.classList.remove('active');
+
+            const nextId = typeof id === 'number' ? `chapter${id}` : `chapter${id}`;
+            const nextEl = document.getElementById(nextId);
+            if (!nextEl) {
+                console.error('Target chapter not found:', nextId);
+                return;
+            }
+
+            currentChapter = id;
+            nextEl.classList.add('active');
+            if (nextEl.classList.contains('recycle-path') || nextEl.classList.contains('trash-path') || nextEl.classList.contains('litter-path')) {
+                nextEl.style.display = 'block';
+            }
+            nextEl.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            playClick();
+            narrateChapter(typeof id === 'number' ? id : id.toString());
+        }
+
+        function makeChoice(choice) {
+            playerChoice = choice;
+            if (choice === 'recycle') {
+                gameScore += 10;
+                nextChapter('3-recycle');
+            } else if (choice === 'trash') {
+                gameScore -= 5;
+                nextChapter('3-trash');
+            } else if (choice === 'litter') {
+                gameScore -= 10;
+                nextChapter('4-litter');
+            }
+            playPop();
+        }
+
+        function showEnding(type) {
+            const endingDiv = document.getElementById('gameEnding');
+            const scoreEl = document.getElementById('scoreDisplay');
+            const impactEl = document.getElementById('impactDisplay');
+            const livesEl = document.getElementById('livesDisplay');
+            const messageEl = document.getElementById('endingMessage');
+
+            scoreEl.textContent = gameScore;
+
+            if (type === 'good') {
+                impactEl.textContent = 'Low';
+                livesEl.textContent = '0';
+                messageEl.innerHTML = '🎉 Excellent choice! By recycling, you helped save the planet! The bottle became useful again instead of polluting the oceans. Keep making smart choices! 🌍♻️';
+                playCorrect();
+            } else {
+                impactEl.textContent = 'High';
+                livesEl.textContent = '10M+';
+                messageEl.innerHTML = '💔 Oh no! Your choice led to pollution. Remember: every plastic item matters. Next time, choose to recycle! Let\'s try again to save our planet! 🌊';
+                playWrong();
+            }
+
+            endingDiv.style.display = 'block';
+            endingDiv.scrollIntoView({
+                behavior: 'smooth'
+            });
+            narrateChapter(`ending-${type}`);
+        }
+
+        function restartGame() {
+            console.log('restartGame called!');
+            gameScore = 0;
+            currentChapter = 1;
+            playerChoice = '';
+            document.querySelectorAll('.story-item').forEach(el => {
+                el.classList.remove('active');
+                if (el.classList.contains('recycle-path') || el.classList.contains('trash-path') || el.classList.contains('litter-path')) {
+                    el.style.display = 'none';
+                }
+            });
+            document.getElementById('chapter1').classList.add('active');
+            document.getElementById('gameEnding').style.display = 'none';
+            document.getElementById('chapter1').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            playClick();
+            // Stop narration and start from beginning
+            stopNarration();
+            narrateChapter(1);
+        }
+
+        // ─── Narration System ───
+        let narrationEnabled = true;
+        const chapterNarrations = {
+            1: "Welcome to the plastic recycling adventure! Follow the journey of a plastic bottle from birth in a factory to its final destination. Your choices will determine the fate of our planet!",
+            2: "Xiao Ming bought this bottle of water. Now it's your turn to decide: recycle it properly, throw it in the trash, or litter it. What will you choose?",
+            '3-recycle': "Great choice! By recycling, the bottle goes to a recycling center where it gets cleaned, shredded, and turned into new products.",
+            '3-trash': "The bottle wasn't recycled. It ends up in a landfill or gets incinerated, releasing harmful gases into the air.",
+            '4-litter': "You chose to litter the bottle. It blows in the wind and flows into rivers, eventually reaching the ocean.",
+            '4-trash': "The bottle from the landfill or incinerator eventually reaches the ocean, joining millions of tons of plastic pollution.",
+            5: "Every year, 8 million tons of plastic enter our oceans. Microplastics harm marine life and end up in our food chain.",
+            6: "Recycled properly, this bottle becomes new products like T-shirts, carpets, or park benches. One bottle, endless possibilities!",
+            'ending-good': "Congratulations! Your recycling choice helped save the planet. Keep making sustainable decisions!",
+            'ending-bad': "Your choices led to pollution. Remember, every plastic item matters. Next time, choose to recycle!"
+        };
+
+        function speakText(text) {
+            if (!narrationEnabled || !soundOn) {
+                console.log('Narration disabled or sound off');
+                return;
+            }
+            if ('speechSynthesis' in window) {
+                console.log('Speaking:', text);
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // English
+                utterance.rate = 0.75; // Slower, more engaging pace
+                utterance.pitch = 1.1; // Slightly higher pitch for friendliness
+                utterance.volume = 0.8; // Good volume level
+
+                // Try to use a friendly voice if available
+                const voices = speechSynthesis.getVoices();
+                console.log('Available voices:', voices.length);
+                const friendlyVoice = voices.find(voice =>
+                    voice.name.includes('Female') ||
+                    voice.name.includes('Zira') ||
+                    voice.name.includes('Google') ||
+                    voice.name.includes('Samantha') ||
+                    voice.lang.includes('en-US')
+                );
+                if (friendlyVoice) {
+                    utterance.voice = friendlyVoice;
+                    console.log('Using voice:', friendlyVoice.name);
+                }
+
+                utterance.onstart = () => console.log('Speech started');
+                utterance.onend = () => console.log('Speech ended');
+                utterance.onerror = (e) => console.log('Speech error:', e);
+
+                speechSynthesis.speak(utterance);
+            } else {
+                console.log('Speech synthesis not supported');
+            }
+        }
+
+        function stopNarration() {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        }
+
+        function narrateChapter(chapterId) {
+            const text = chapterNarrations[chapterId];
+            if (text) {
+                stopNarration();
+                setTimeout(() => speakText(text), 500); // Delay to allow UI update
+            }
+        }
+
+        // ─── QUIZ ───
+        const questions = [{
+            q: "What does the number on the bottom of a plastic bottle tell you?",
+            opts: ["How much it cost", "The recycling code (type of plastic)", "How old it is", "How many times it can be refilled"],
+            ans: 1,
+            fb: "Correct! The number (1–7) is the Resin Identification Code — it tells you what type of plastic it is and how to recycle it. 🎉"
+        }, {
+            q: "Why should you NEVER put plastic bags in the recycling bin?",
+            opts: ["They take up too much space", "They are not really plastic", "They jam and tangle the recycling machinery", "Bags are already 100% recycled"],
+            ans: 2,
+            fb: "Spot on! Plastic bags wrap around the machinery at recycling plants and jam the equipment. Take them to a supermarket drop-off instead! 🏪"
+        }, {
+            q: "How long does it take for ONE plastic bottle to break down in nature?",
+            opts: ["1 year", "10 years", "100 years", "450 years"],
+            ans: 3,
+            fb: "Wow, 450 years! That means a bottle dropped today will still be here long after your great-great-great-grandchildren are born! 😱"
+        }, {
+            q: "Which plastic number is the EASIEST to recycle almost everywhere?",
+            opts: ["1 and 2", "3 and 6", "6 and 7", "4 and 5"],
+            ans: 0,
+            fb: "Yes! Plastics #1 (PET) and #2 (HDPE) are accepted in recycling bins in most places worldwide. Always check for these numbers first! ✅"
+        }, {
+            q: "What should you do BEFORE putting a plastic container in the recycling bin?",
+            opts: ["Decorate it with stickers", "Rinse it clean of food and grease", "Fill it with water", "Wrap it in a plastic bag"],
+            ans: 1,
+            fb: "Exactly! Food residue on containers can contaminate a whole load of recycling, meaning EVERYTHING gets sent to landfill. A quick rinse makes a huge difference! 💧"
+        }];
+
+        let qIndex = 0,
+            score = 0,
+            answered = false;
+
+        function buildQuiz() {
+            console.log('buildQuiz called, qIndex:', qIndex, 'questions length:', questions.length);
+            const prog = document.getElementById('quizProgress');
+            if (!prog) {
+                console.error('quizProgress element not found!');
+                return;
+            }
+            prog.innerHTML = '';
+            questions.forEach((q, i) => {
+                const pip = document.createElement('div');
+                pip.className = 'quiz-pip' + (i < qIndex ? ' done' : (i === qIndex ? ' current' : ''));
+                prog.appendChild(pip);
+            });
+
+            const q = questions[qIndex];
+            document.getElementById('quizQuestion').textContent = `Q${qIndex+1}: ${q.q}`;
+            const opts = document.getElementById('quizOptions');
+            opts.innerHTML = '';
+            q.opts.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt';
+                btn.innerHTML = `<span style="width:28px;height:28px;border-radius:50%;background:var(--ocean3);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">${['A','B','C','D'][i]}</span>${o}`;
+                btn.onclick = () => answerQuiz(i, btn);
+                opts.appendChild(btn);
+            });
+
+            const fb = document.getElementById('quizFeedback');
+            fb.className = 'quiz-feedback';
+            fb.textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('quizScore').style.display = 'none';
+            answered = false;
+        }
+
+        function answerQuiz(i, btn) {
+            if (answered) return;
+            answered = true;
+            const q = questions[qIndex];
+            const opts = document.querySelectorAll('.quiz-opt');
+            opts[q.ans].classList.add('correct');
+            const fb = document.getElementById('quizFeedback');
+
+            if (i === q.ans) {
+                score++;
+                btn.classList.add('correct');
+                fb.className = 'quiz-feedback show right';
+                fb.textContent = '✅ ' + q.fb;
+                playCorrect();
+            } else {
+                btn.classList.add('wrong');
+                fb.className = 'quiz-feedback show wrong';
+                fb.textContent = '❌ Not quite! ' + q.fb;
+                playWrong();
+            }
+
+            opts.forEach(o => o.style.pointerEvents = 'none');
+            const nextBtn = document.getElementById('nextBtn');
+            if (qIndex < questions.length - 1) {
+                nextBtn.textContent = 'Next Question ➡️';
+            } else {
+                nextBtn.textContent = 'See My Score 🏆';
+            }
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            qIndex++;
+            if (qIndex < questions.length) {
+                buildQuiz();
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            const pct = Math.round(score / questions.length * 100);
+            let msg, emoji;
+            if (pct === 100) {
+                msg = "PERFECT SCORE! You're a Recycling Master!";
+                emoji = "🏆🌟"
+            } else if (pct >= 80) {
+                msg = "Excellent work! You're almost a Recycling Champion!";
+                emoji = "🥇🎉"
+            } else if (pct >= 60) {
+                msg = "Good job! Keep learning and you'll be an expert!";
+                emoji = "👍📚"
+            } else {
+                msg = "Keep it up! Re-read the guide and try again!";
+                emoji = "💪🔄"
+            }
+
+            document.getElementById('quizQuestion').textContent = '';
+            document.getElementById('quizOptions').innerHTML = '';
+            document.getElementById('quizFeedback').className = 'quiz-feedback';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            const scoreEl = document.getElementById('quizScore');
+            scoreEl.style.display = 'block';
+            scoreEl.innerHTML = `
+    <div style="font-size:3rem">${emoji}</div>
+    <div style="font-size:2.5rem;color:var(--ocean)">You scored ${score} / ${questions.length}</div>
+    <div style="font-size:1.1rem;color:#555;margin:.5rem 0">${msg}</div>
+    <button onclick="restartQuiz()" style="margin-top:1rem;background:var(--ocean);color:#fff;border:none;font-family:var(--body);font-weight:700;padding:.7rem 1.8rem;border-radius:50px;cursor:pointer;font-size:1rem">🔄 Try Again</button>
+  `;
+            playPledge();
+        }
+
+        function restartQuiz() {
+            qIndex = 0;
+            score = 0;
+            buildQuiz();
+        }
+
+        // buildQuiz(); // Moved to DOMContentLoaded event
+
+        // ─── Pledge ───
+        function takePledge() {
+            const box = document.getElementById('pledgeBox');
+            const btn = document.getElementById('pledgeBtn');
+            const confetti = document.getElementById('pledgeConfetti');
+            box.classList.add('pledge-done');
+            btn.textContent = '✅ I Have Pledged! I Am an Earth Guardian!';
+            confetti.style.display = 'block';
+            createConfettiBurst();
+            playPledge();
+        }
+
+        function createConfettiBurst() {
+            const colors = ['#f9c74f', '#90be6d', '#43aa8b', '#4d9de0', '#f94144'];
+            for (let i = 0; i < 40; i++) {
+                const el = document.createElement('div');
+                el.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:${Math.random()*40}vh;width:${8+Math.random()*10}px;height:${8+Math.random()*10}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none;z-index:9999;animation:confettiFall ${1+Math.random()*2}s ease forwards;`;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 3000);
+            }
+        }
+        const style = document.createElement('style');
+        style.textContent = `@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(300px) rotate(720deg);opacity:0}}`;
+        document.head.appendChild(style);
+
+        // ─── Nav active state ───
+        const sections = ['story', 'videos', 'types', 'tutorial', 'quiz', 'pledge'];
+        const navBtns = document.querySelectorAll('.nav-btn');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 200) current = id;
+            });
+            navBtns.forEach((btn, i) => btn.classList.toggle('active', sections[i] === current));
+        });
+
+        // ─── Enable audio on user interaction ───
+        document.addEventListener('click', function enableAudio() {
+            console.log('User clicked, enabling audio...');
+            if (soundOn && gameActive) {
+                playBackgroundMusic();
+            }
+            document.removeEventListener('click', enableAudio);
+        });
+    </script>
+</body>
+
+</html>
